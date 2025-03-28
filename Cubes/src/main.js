@@ -13,8 +13,20 @@ const scene = new THREE.Scene();
 // Object
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-const mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);
+let position = {
+	x: -10,
+	y: -10,
+};
+for (let i = 0; i < 11; i++) {
+	for (let j = 0; j < 11; j++) {
+		const mesh = new THREE.Mesh(geometry, material);
+		mesh.position.x = position.x;
+		mesh.position.y = position.y;
+		scene.add(mesh);
+		position.y += 2;
+	}
+	position.x += 2;
+}
 
 // Sizes
 const sizes = {
@@ -38,7 +50,7 @@ window.addEventListener("resize", () => {
 
 // Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-camera.position.z = 3;
+camera.position.z = 10;
 scene.add(camera);
 
 // Controls
