@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import gsap from "gsap";
 
 /**
  * Base
@@ -13,21 +14,35 @@ const scene = new THREE.Scene();
 // Object
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-let position = {
-	x: -10,
-	y: -10,
-};
-for (let i = 0; i < 11; i++) {
-	for (let j = 0; j < 11; j++) {
-		const mesh = new THREE.Mesh(geometry, material);
-		mesh.position.x = position.x;
-		mesh.position.y = position.y;
-		scene.add(mesh);
-		position.y += 2;
-	}
-	position.x += 2;
-}
+const startX = -10; // Adjust for centering
+const startY = -10;
+const spacing = 2; // Distance between cubes
+const cubes = [];
 
+for (let i = 0; i < 20; i++) {
+	for (let j = 0; j < 20; j++) {
+		const mesh = new THREE.Mesh(geometry, material);
+		mesh.position.x = startX + j * spacing; // Columns
+		mesh.position.y = startY + i * spacing; // Rows
+		scene.add(mesh);
+		cubes.push(mesh);
+	}
+}
+gsap.to(
+	cubes.map((cube) => cube.position),
+	{
+		duration: 1,
+		z: 3,
+		repeat: -1,
+		yoyo: true,
+		stagger: {
+			grid: [20, 20], // Grid size?
+			from: "center",
+			axis: "",
+			amount: 1.5,
+		},
+	}
+);
 // Sizes
 const sizes = {
 	width: window.innerWidth,
