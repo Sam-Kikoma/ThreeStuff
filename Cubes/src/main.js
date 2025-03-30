@@ -10,24 +10,47 @@ const canvas = document.querySelector("canvas.webgl");
 
 // Scene
 const scene = new THREE.Scene();
-
+// Axes Helper
+// const axesHelper = new THREE.AxesHelper();
+// scene.add(axesHelper);
 // Object
 const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-const startX = -10; // Adjust for centering
-const startY = -10;
-const spacing = 2; // Distance between cubes
+
+//
+const randomColor = (() => {
+	"use strict";
+
+	const randomInt = (min, max) => {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	};
+
+	return () => {
+		var h = randomInt(0, 360);
+		var s = randomInt(42, 98);
+		var l = randomInt(40, 90);
+		return `hsl(${h},${s}%,${l}%)`;
+	};
+})();
+//
+
+const material = new THREE.MeshBasicMaterial({});
+
+const posX = -10;
+const posY = -10;
+const spacing = 2;
 const cubes = [];
 
 for (let i = 0; i < 20; i++) {
 	for (let j = 0; j < 20; j++) {
 		const mesh = new THREE.Mesh(geometry, material);
-		mesh.position.x = startX + j * spacing; // Columns
-		mesh.position.y = startY + i * spacing; // Rows
+		material.color.setStyle(randomColor());
+		mesh.position.x = posX + j * spacing; // Columns
+		mesh.position.y = posY + i * spacing; // Rows
 		scene.add(mesh);
 		cubes.push(mesh);
 	}
 }
+geometry.center();
 gsap.to(
 	cubes.map((cube) => cube.position),
 	{
