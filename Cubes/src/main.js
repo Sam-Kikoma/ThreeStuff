@@ -1,13 +1,15 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import gsap from "gsap";
+import GUI from "lil-gui";
 
 /**
  * Base
  */
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
-
+// lil gui
+const gui = new GUI();
 // Scene
 const scene = new THREE.Scene();
 // Axes Helper
@@ -61,12 +63,14 @@ gsap.to(
 		yoyo: true,
 		stagger: {
 			grid: [20, 20], // Grid size?
-			from: "center",
+			from: "random",
 			axis: "",
 			amount: 1.5,
 		},
 	}
 );
+
+// Work on lil gui
 // Sizes
 const sizes = {
 	width: window.innerWidth,
