@@ -35,13 +35,14 @@ const randomColor = (() => {
 
 const material = new THREE.MeshBasicMaterial({});
 
-const posX = -10;
-const posY = -10;
+const posX = -20;
+const posY = -20;
 const spacing = 2;
 const cubes = [];
+let gridSize = 20;
 
-for (let i = 0; i < 20; i++) {
-	for (let j = 0; j < 20; j++) {
+for (let i = 0; i < gridSize; i++) {
+	for (let j = 0; j < gridSize; j++) {
 		const mesh = new THREE.Mesh(geometry, material);
 		material.color.setStyle(randomColor());
 		mesh.position.x = posX + j * spacing; // Columns
@@ -50,7 +51,7 @@ for (let i = 0; i < 20; i++) {
 		cubes.push(mesh);
 	}
 }
-geometry.center();
+
 gsap.to(
 	cubes.map((cube) => cube.position),
 	{
@@ -88,7 +89,7 @@ window.addEventListener("resize", () => {
 
 // Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-camera.position.z = 10;
+camera.position.z = 30;
 scene.add(camera);
 
 // Controls
